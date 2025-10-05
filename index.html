@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+  />
+  
+ 
+  <script type="module" src="https://unpkg.com/@splinetool/viewer@1.10.74/build/spline-viewer.js"></script>
+     <link rel="icon" type="image/png" href="images/man (1).png">
+  <title>Mani Simha Portfolio</title>
+
+  <style>
+    body {
+      background-color: #000;
+      color: white;
+      font-family: 'Poppins', sans-serif;
+    }
+
+   
+    .spline-wrapper {
+      position: relative;
+      width: 100%;
+      height: 70vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 2rem;
+      border: 2px solid rgba(255,193,7,0.4);
+      box-shadow: 0 0 35px rgba(255,193,7,0.25);
+      background: radial-gradient(circle at center, rgba(255,193,7,0.05), rgba(0,0,0,0.9));
+      overflow: hidden;
+      transition: all 0.4s ease;
+    }
+
+    .spline-wrapper:hover {
+      transform: scale(1.02);
+      box-shadow: 0 0 45px rgba(255,215,0,0.4);
+    }
+
+    spline-viewer {
+      width: 85%;
+      height: 65vh;
+      border-radius: 1.5rem;
+      background: transparent;
+      opacity: 0;
+      transform: scale(0.95);
+      transition: opacity 1s ease, transform 1s ease;
+    }
+
+    spline-viewer.visible {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+  
+    .access-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(4px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: #ffc107;
+      font-weight: 700;
+      text-transform: uppercase;
+      text-shadow: 0 0 15px rgba(255,215,0,0.7);
+      z-index: 2;
+      letter-spacing: 3px;
+      overflow: hidden;
+    }
+
+    .access-text {
+      font-size: 1.8rem;
+      animation: glitch 2s infinite;
+    }
+
+    .scan-line {
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #ffd700, transparent);
+      animation: scan 2.5s linear infinite;
+      opacity: 0.7;
+    }
+
+    @keyframes glitch {
+      0% { text-shadow: 2px 2px rgba(255,215,0,0.8); }
+      20% { text-shadow: -2px 1px rgba(255,0,0,0.8); }
+      40% { text-shadow: 2px -1px rgba(0,255,255,0.8); }
+      60% { text-shadow: -1px -2px rgba(255,215,0,0.8); }
+      80% { text-shadow: 1px 2px rgba(0,255,255,0.8); }
+      100% { text-shadow: 2px 2px rgba(255,215,0,0.8); }
+    }
+
+    @keyframes scan {
+      0% { transform: translateY(-100%); }
+      100% { transform: translateY(200%); }
+    }
+
+    .access-overlay.hidden {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.8s ease;
+    }
+
+    .magic-btn {
+      background: linear-gradient(135deg, #f59e0b, #f43f5e);
+      padding: 0.9rem 2rem;
+      border: none;
+      border-radius: 9999px;
+      color: white;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      box-shadow: 0 0 20px rgba(255,193,7,0.4);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .magic-btn:hover {
+      transform: scale(1.08);
+      box-shadow: 0 0 35px rgba(255,215,0,0.6);
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <nav class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+      <span class="py-5 text-amber-600 font-bold text-3xl cursor-pointer">
+        <span class="text-white hover:text-amber-500 transition duration-300">Mani</span> Simha
+      </span>
+
+      <div class="hidden lg:flex items-center space-x-7">
+        <ul class="flex items-center space-x-7">
+          <li class="hover:text-amber-600 text-white cursor-pointer">Home</li>
+          <li class="hover:text-red-50 text-white cursor-pointer"><a href="skills.html">Skills</a></li>
+          <li class="hover:text-lime-500 text-white cursor-pointer"><a href="projects.html">Projects</a></li>
+          <li>
+            <button onclick="window.location.href='https://docs.google.com/document/d/1WhZaGl6Kya5BVnbgyGS6BnTBKMN-EOYMSYo0_HKazCE/edit?tab=t.0';"
+              type="button"
+              class="text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-6 py-3"
+            >
+              Download Resume
+            </button>
+          </li>
+        </ul>
+      </div>
+
+      <button id="hamburger-button" class="lg:hidden text-white">
+        <i id="hamburger-icon" class="fa-solid fa-bars text-2xl"></i>
+      </button>
+    </nav>
+
+    <div id="mobile-menu" class="hidden lg:hidden bg-black">
+      <ul class="flex flex-col items-center py-4 space-y-4">
+        <li class="text-white hover:text-amber-600 cursor-pointer">Home</li>
+             <li class="hover:text-red-50 text-white cursor-pointer"><a href="skills.html">Skills</a></li>
+          <li class="hover:text-lime-500 text-white cursor-pointer"><a href="projects.html">Projects</a></li>
+        <li>
+          <button onclick="window.location.href='https://docs.google.com/document/d/1WhZaGl6Kya5BVnbgyGS6BnTBKMN-EOYMSYo0_HKazCE/edit?tab=t.0';"
+              type="button"
+              class="text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-6 py-3"
+            >
+              Download Resume
+            </button>
+        </li>
+      </ul>
+    </div>
+  </header>
+
+  <main>
+    <div class="grid grid-cols-1 md:grid-cols-2">
+      <div class="text-amber-100 ml-4 md:ml-14 p-8">
+        <h1 class="text-4xl font-bold mb-4">
+          Hi, I'm <span class="text-amber-500">Mani Simha</span>
+        </h1>
+        <p class="text-lg text-gray-400 mb-8 font-bold li">
+          Actually I am a student of Scaler School of technology.
+          There’s one thing I enjoy: coding and building things.
+          If you want to know more Visit Projects Section
+        </p>
+
+        <p class="font-sans text-amber-300 font-extrabold mb-8">Contact Me :</p>
+        <p class="flex space-x-2 mb-8">
+          <a href="https://www.linkedin.com/in/itsmanisimha/" target="_blank">
+            <img width="50" height="50" src="images/linkedin.png" alt="LinkedIn" />
+          </a>
+          <a href="https://github.com/Manisimha14" target="_blank">
+            <img width="50" height="50" src="images/github.png" alt="GitHub" />
+          </a>
+          <a href="https://x.com/itsmanisimha" target="_blank">
+            <img width="50" height="50" src="images/twitter.png" alt="Twitter" />
+          </a>
+        </p>
+
+        <button class="magic-btn" id="showMagic">Press This to See the Magic!! 🔒</button>
+      </div>
+
+      <div class="flex justify-center items-center p-4 md:p-6">
+        <div class="spline-wrapper">
+          
+          <div id="accessOverlay" class="access-overlay">
+            <div class="scan-line"></div>
+            <div class="access-text">ACCESS RESTRICTED</div>
+            <div class="scan-line"></div>
+          </div>
+
+          
+          <spline-viewer id="splineModel"
+            url="https://prod.spline.design/aSYpB2DYZWsSPMdN/scene.splinecode">
+          </spline-viewer>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const hamburgerButton = document.getElementById("hamburger-button");
+      const mobileMenu = document.getElementById("mobile-menu");
+      const hamburgerIcon = document.getElementById("hamburger-icon");
+      const btn = document.getElementById("showMagic");
+      const splineModel = document.getElementById("splineModel");
+      const accessOverlay = document.getElementById("accessOverlay");
+
+      hamburgerButton.addEventListener("click", () => {
+        mobileMenu.classList.toggle("hidden");
+        hamburgerIcon.classList.toggle("fa-times");
+        hamburgerIcon.classList.toggle("fa-bars");
+      });
+
+      btn.addEventListener("click", () => {
+        accessOverlay.classList.add("hidden");
+        splineModel.classList.add("visible");
+        btn.disabled = true;
+        btn.innerText = "✅ Access Granted — Magic Unlocked! Hope you like it ";
+      });
+    });
+  </script>
+
+  <footer class="text-amber-300 w-100% h-24 flex justify-center items-center"><p>Copyright  &copy; 2025.Made with Love Mani Simha</p>
+       <p class="flex justify-end-safe">
+          <a href="https://www.linkedin.com/in/itsmanisimha/" target="_blank">
+            <img width="50" height="50" src="images/linkedin.png" alt="LinkedIn" />
+          </a>
+          <a href="https://github.com/Manisimha14" target="_blank">
+            <img width="50" height="50" src="images/github.png" alt="GitHub" />
+          </a>
+          <a href="https://x.com/itsmanisimha" target="_blank">
+            <img width="50" height="50" src="images/twitter.png" alt="Twitter" />
+          </a>
+        </p>
+  </footer>
+</body>
+</html>
+
+
+
+
+
+
+
